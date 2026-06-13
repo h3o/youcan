@@ -1,0 +1,18 @@
+{
+    "name": "youcan/app",
+    "description": "YouCan short story publishing platform",
+    "type": "project",
+    "require": {
+        "php": "^8.4",
+        "ezyang/htmlpurifier": "^4.17"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "optimize-autoloader": true
+    }
+}

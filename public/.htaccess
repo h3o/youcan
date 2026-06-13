@@ -1,0 +1,9 @@
+Options -MultiViews -Indexes
+RewriteEngine On
+
+# Serve real files and directories directly (CSS, JS, images)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Route everything else to the front controller
+RewriteRule ^ index.php [QSA,L]
