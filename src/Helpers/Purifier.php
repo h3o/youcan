@@ -7,7 +7,7 @@ use HTMLPurifier_Config;
 
 class Purifier
 {
-    private static ?HTMLPurifier $instance = null;
+    private static $instance = null;
 
     public static function sanitize(string $html): string
     {
