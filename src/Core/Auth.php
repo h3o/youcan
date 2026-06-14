@@ -48,7 +48,7 @@ class Auth
                 Response::json(['error' => 'Unauthenticated'], 401);
             }
             Session::flash('_intended', $_SERVER['REQUEST_URI'] ?? '/');
-            Response::redirect('/login');
+            Response::redirect(url('/login'));
         }
     }
 }

@@ -15,7 +15,7 @@ class AuthController
     public function showRegister(array $params): void
     {
         if (Auth::check()) {
-            Response::redirect('/');
+            Response::redirect(url('/'));
         }
         View::render('auth/register', ['pageTitle' => t('auth.create_account')]);
     }
@@ -63,13 +63,13 @@ class AuthController
         $userId = User::create($username, $email, $password);
         Auth::login($userId);
         Session::flash('success', t('flash.welcome', ['site' => t('site.name'), 'user' => $username]));
-        Response::redirect('/');
+        Response::redirect(url('/'));
     }
 
     public function showLogin(array $params): void
     {
         if (Auth::check()) {
-            Response::redirect('/');
+            Response::redirect(url('/'));
         }
         View::render('auth/login', ['pageTitle' => t('auth.welcome_back')]);
     }
@@ -100,7 +100,7 @@ class AuthController
         }
 
         Auth::login((int)$user['id']);
-        $intended = Session::get('_intended', '/');
+        $intended = Session::get('_intended', url('/'));
         Session::remove('_intended');
         Response::redirect($intended);
     }
@@ -109,6 +109,6 @@ class AuthController
     {
         Csrf::validate($_POST['_csrf'] ?? '') || Csrf::fail();
         Auth::logout();
-        Response::redirect('/login');
+        Response::redirect(url('/login'));
     }
 }

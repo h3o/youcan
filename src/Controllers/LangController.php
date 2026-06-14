@@ -18,6 +18,6 @@ class LangController
         // Redirect back to the same page (extract path only to prevent open redirect)
         $referer = $_SERVER['HTTP_REFERER'] ?? '/';
         $path    = parse_url($referer, PHP_URL_PATH) ?? '/';
-        Response::redirect($path ?: '/');
+        Response::redirect($path ?: url('/'));
     }
 }

@@ -1,6 +1,11 @@
 Options -MultiViews -Indexes
 RewriteEngine On
 
+# When deploying to a subdirectory (e.g. /ajty/), set RewriteBase to match:
+# RewriteBase /ajty/
+# Leave commented out (or set to /) when running at the domain root.
+RewriteBase /
+
 # Serve real files and directories directly (CSS, JS, images)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

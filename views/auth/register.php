@@ -3,7 +3,7 @@
         <h1 class="auth-card__title"><?= htmlspecialchars(t('auth.create_account'), ENT_QUOTES, 'UTF-8') ?></h1>
         <p class="auth-card__subtitle"><?= htmlspecialchars(t('auth.subtitle_register', ['site' => t('site.name')]), ENT_QUOTES, 'UTF-8') ?></p>
 
-        <form method="post" action="/register" class="form" novalidate>
+        <form method="post" action="<?= url('/register') ?>" class="form" novalidate>
             <?= \App\Core\Csrf::field() ?>
 
             <div class="form-group<?= isset($errors['username']) ? ' form-group--error' : '' ?>">
@@ -48,6 +48,6 @@
         </form>
 
         <p class="auth-card__switch"><?= htmlspecialchars(t('auth.have_account'), ENT_QUOTES, 'UTF-8') ?>
-           <a href="/login"><?= htmlspecialchars(t('auth.sign_in_link'), ENT_QUOTES, 'UTF-8') ?></a></p>
+           <a href="<?= url('/login') ?>"><?= htmlspecialchars(t('auth.sign_in_link'), ENT_QUOTES, 'UTF-8') ?></a></p>
     </div>
 </div>

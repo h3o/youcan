@@ -35,11 +35,19 @@ class Router
 
     public function dispatch(Request $request): void
     {
+        // Strip the base path prefix so routes are always relative to app root
+        $base = Url::base();
+        $path = $request->path;
+        if ($base !== '' && strpos($path, $base) === 0) {
+            $stripped = substr($path, strlen($base));
+            $path = ($stripped === '' || $stripped === false) ? '/' : $stripped;
+        }
+
         foreach ($this->routes as $route) {
             if ($route['method'] !== $request->method) {
                 continue;
             }
-            if (!preg_match($route['regex'], $request->path, $matches)) {
+            if (!preg_match($route['regex'], $path, $matches)) {
                 continue;
             }
 

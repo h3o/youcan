@@ -7,7 +7,7 @@
             <div class="flash flash--error"><?= htmlspecialchars($errors['form'], ENT_QUOTES, 'UTF-8') ?></div>
         <?php endif; ?>
 
-        <form method="post" action="/login" class="form" novalidate>
+        <form method="post" action="<?= url('/login') ?>" class="form" novalidate>
             <?= \App\Core\Csrf::field() ?>
 
             <div class="form-group">
@@ -27,6 +27,6 @@
         </form>
 
         <p class="auth-card__switch"><?= htmlspecialchars(t('auth.no_account'), ENT_QUOTES, 'UTF-8') ?>
-           <a href="/register"><?= htmlspecialchars(t('auth.join_link'), ENT_QUOTES, 'UTF-8') ?></a></p>
+           <a href="<?= url('/register') ?>"><?= htmlspecialchars(t('auth.join_link'), ENT_QUOTES, 'UTF-8') ?></a></p>
     </div>
 </div>

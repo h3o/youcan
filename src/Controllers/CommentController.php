@@ -26,7 +26,7 @@ class CommentController
                     ? (int)$_POST['parent_id'] : null;
 
         if ($body === '' || mb_strlen($body) > 2000) {
-            Response::redirect('/stories/' . $params['slug'] . '#comments');
+            Response::redirect(url('/stories/' . $params['slug'] . '#comments'));
         }
 
         // Enforce one-level threading
@@ -51,7 +51,7 @@ class CommentController
         if ($type === 'inline' && $parentId === null) {
             $anchorText = trim($_POST['anchor_text'] ?? '');
             if ($anchorText === '') {
-                Response::redirect('/stories/' . $params['slug']);
+                Response::redirect(url('/stories/' . $params['slug']));
             }
 
             $plainText = html_entity_decode(strip_tags($story['content']), ENT_QUOTES, 'UTF-8');
@@ -69,7 +69,7 @@ class CommentController
         }
 
         $id = Comment::create($data);
-        Response::redirect('/stories/' . $params['slug'] . '#comment-' . $id);
+        Response::redirect(url('/stories/' . $params['slug'] . '#comment-' . $id));
     }
 
     public function destroy(array $params): void
@@ -94,6 +94,6 @@ class CommentController
         Comment::delete($commentId);
 
         $slug = $story['slug'] ?? '';
-        Response::redirect($slug ? '/stories/' . $slug . '#comments' : '/');
+        Response::redirect($slug ? url('/stories/' . $slug . '#comments') : url('/'));
     }
 }

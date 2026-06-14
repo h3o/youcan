@@ -2,7 +2,7 @@
     <div class="editor-page">
         <h1 class="editor-page__title"><?= htmlspecialchars(t('story.edit_heading'), ENT_QUOTES, 'UTF-8') ?></h1>
 
-        <form method="post" action="/stories/<?= htmlspecialchars($story['slug'], ENT_QUOTES, 'UTF-8') ?>/update" class="form" id="story-form">
+        <form method="post" action="<?= url('/stories/' . htmlspecialchars($story['slug'], ENT_QUOTES, 'UTF-8') . '/update') ?>" class="form" id="story-form">
             <?= \App\Core\Csrf::field() ?>
 
             <div class="form-group<?= isset($errors['title']) ? ' form-group--error' : '' ?>">
@@ -45,7 +45,7 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn btn--primary"><?= htmlspecialchars(t('story.save_changes'), ENT_QUOTES, 'UTF-8') ?></button>
-                <a href="/stories/<?= htmlspecialchars($story['slug'], ENT_QUOTES, 'UTF-8') ?>" class="btn btn--ghost"><?= htmlspecialchars(t('story.cancel'), ENT_QUOTES, 'UTF-8') ?></a>
+                <a href="<?= url('/stories/' . htmlspecialchars($story['slug'], ENT_QUOTES, 'UTF-8')) ?>" class="btn btn--ghost"><?= htmlspecialchars(t('story.cancel'), ENT_QUOTES, 'UTF-8') ?></a>
             </div>
         </form>
     </div>

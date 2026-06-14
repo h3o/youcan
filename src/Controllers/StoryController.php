@@ -63,7 +63,7 @@ class StoryController
         $slug  = Slug::generate($title);
 
         Story::create(Auth::id(), $title, $slug, $clean, $genres);
-        Response::redirect('/stories/' . $slug);
+        Response::redirect(url('/stories/' . $slug));
     }
 
     public function show(array $params): void
@@ -147,7 +147,7 @@ class StoryController
         $newSlug = Slug::generate($title, (int)$story['id']);
 
         Story::update($story['id'], $title, $newSlug, $clean, $genres);
-        Response::redirect('/stories/' . $newSlug);
+        Response::redirect(url('/stories/' . $newSlug));
     }
 
     public function destroy(array $params): void
@@ -164,7 +164,7 @@ class StoryController
 
         Story::delete($story['id']);
         Session::flash('success', t('flash.deleted'));
-        Response::redirect('/');
+        Response::redirect(url('/'));
     }
 
     private function filterGenres($input): array

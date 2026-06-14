@@ -24,7 +24,7 @@
                             <span class="story-card__genre"><?= htmlspecialchars(t('genre.' . $g), ENT_QUOTES, 'UTF-8') ?></span>
                         <?php endforeach; ?>
                         <h2 class="story-card__title">
-                            <a href="/stories/<?= htmlspecialchars($story['slug'], ENT_QUOTES, 'UTF-8') ?>">
+                            <a href="<?= url('/stories/' . htmlspecialchars($story['slug'], ENT_QUOTES, 'UTF-8')) ?>">
                                 <?= htmlspecialchars($story['title'], ENT_QUOTES, 'UTF-8') ?>
                             </a>
                         </h2>

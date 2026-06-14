@@ -2,9 +2,11 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── CSRF token ────────────────────────────────────────────────────────────
+    // ── CSRF token & base URL ─────────────────────────────────────────────────
     const csrfMeta  = document.querySelector('meta[name="csrf-token"]');
     const csrfToken = csrfMeta ? csrfMeta.content : '';
+    const baseMeta  = document.querySelector('meta[name="base-url"]');
+    const BASE      = baseMeta ? baseMeta.content : '';
 
     // ── Mobile nav toggle ─────────────────────────────────────────────────────
     const navToggle = document.querySelector('.nav__toggle');
@@ -66,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const slug = btn.dataset.slug;
-                const res  = await fetch(`/stories/${slug}/like`, {
+                const res  = await fetch(BASE + `/stories/${slug}/like`, {
                     method: 'POST',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
@@ -77,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (res.status === 401) {
-                    window.location.href = '/login';
+                    window.location.href = BASE + '/login';
                     return;
                 }
                 if (!res.ok) return;
@@ -324,7 +326,7 @@ function initAnnotations() {
         const canDelete = YC.isLoggedIn &&
             (parseInt(c.user_id, 10) === parseInt(YC.currentUserId, 10) || YC.isOwner);
         const deleteBtn = canDelete
-            ? `<form method="post" action="/comments/${c.id}/delete" class="comment__delete-form"
+            ? `<form method="post" action="${BASE}/comments/${c.id}/delete" class="comment__delete-form"
                     onsubmit="return confirm(${JSON.stringify(YC.i18n.deleteConfirm)})">
                  <input type="hidden" name="_csrf" value="${YC.csrfToken}">
                  <button type="submit" class="comment__delete">×</button>

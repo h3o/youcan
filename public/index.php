@@ -12,15 +12,25 @@ require BASE_PATH . '/vendor/autoload.php';
 // Start session
 use App\Core\Session;
 use App\Core\Lang;
+use App\Core\Url;
+
 Session::start();
+
+// Initialize base URL (e.g. '/ajty' for subdirectory hosting, '' for root)
+Url::init($_ENV['APP_BASE'] ?? '');
 
 // Initialize localization
 Lang::init();
 
-// Global translation helper available in all views and controllers
+// Global helpers available in all views and controllers
 function t(string $key, array $params = []): string
 {
     return Lang::t($key, $params);
+}
+
+function url(string $path = '/'): string
+{
+    return Url::to($path);
 }
 
 // Dispatch

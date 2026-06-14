@@ -2,7 +2,7 @@
     <div class="editor-page">
         <h1 class="editor-page__title"><?= htmlspecialchars(t('story.write_heading'), ENT_QUOTES, 'UTF-8') ?></h1>
 
-        <form method="post" action="/stories" class="form" id="story-form">
+        <form method="post" action="<?= url('/stories') ?>" class="form" id="story-form">
             <?= \App\Core\Csrf::field() ?>
 
             <div class="form-group<?= isset($errors['title']) ? ' form-group--error' : '' ?>">
@@ -46,7 +46,7 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn btn--primary"><?= htmlspecialchars(t('story.publish'), ENT_QUOTES, 'UTF-8') ?></button>
-                <a href="/" class="btn btn--ghost"><?= htmlspecialchars(t('story.cancel'), ENT_QUOTES, 'UTF-8') ?></a>
+                <a href="<?= url('/') ?>" class="btn btn--ghost"><?= htmlspecialchars(t('story.cancel'), ENT_QUOTES, 'UTF-8') ?></a>
             </div>
         </form>
     </div>
