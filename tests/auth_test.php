@@ -15,6 +15,14 @@
 
 declare(strict_types=1);
 
+// PHP 7.3 polyfills
+function yc_str_contains(string $haystack, string $needle): bool {
+    return $needle === '' || strpos($haystack, $needle) !== false;
+}
+function yc_str_ends_with(string $haystack, string $needle): bool {
+    return $needle === '' || substr($haystack, -strlen($needle)) === $needle;
+}
+
 const BASE_URL  = 'http://localhost';
 const TEST_USER = 'testuser_auth_' . __LINE__;  // unique enough for one run
 
@@ -96,14 +104,14 @@ function csrf(string $html): string
 function redirectsTo(array $res, string $path): bool
 {
     return $res['status'] >= 300 && $res['status'] < 400
-        && (str_ends_with(rtrim($res['location'], '/'), $path)
+        && (yc_str_ends_with(rtrim($res['location'], '/'), $path)
             || $res['location'] === $path);
 }
 
 /** Check whether the profile nav link (username) appears in a page body. */
 function isLoggedInBody(string $body, string $username): bool
 {
-    return str_contains($body, '/profile/' . $username);
+    return yc_str_contains($body, '/profile/' . $username);
 }
 
 // ── Test setup ────────────────────────────────────────────────────────────────
@@ -153,7 +161,7 @@ $res = req('POST', '/register', [
     'password_confirm' => $password,
 ], $jar2);
 
-ok('Duplicate username rejected (stays on register)', $res['status'] === 200 && str_contains($res['body'], 'register'));
+ok('Duplicate username rejected (stays on register)', $res['status'] === 200 && yc_str_contains($res['body'], 'register'));
 
 // Duplicate email
 $res   = req('GET', '/register', cookieJar: $jar2);
@@ -167,7 +175,7 @@ $res = req('POST', '/register', [
     'password_confirm' => $password,
 ], $jar2);
 
-ok('Duplicate email rejected (stays on register)', $res['status'] === 200 && str_contains($res['body'], 'register'));
+ok('Duplicate email rejected (stays on register)', $res['status'] === 200 && yc_str_contains($res['body'], 'register'));
 
 // ── 4. Log out first session so we can test login fresh ──────────────────────
 echo "\nLogin with email\n";
@@ -233,7 +241,7 @@ $res = req('POST', '/login', [
 ], $jar3);
 
 ok('Wrong password stays on login page (200)', $res['status'] === 200);
-ok('Wrong password shows error message', str_contains($res['body'], 'Invalid') || str_contains($res['body'], 'Neplatné') || str_contains($res['body'], 'Neplatný'));
+ok('Wrong password shows error message', yc_str_contains($res['body'], 'Invalid') || yc_str_contains($res['body'], 'Neplatné') || yc_str_contains($res['body'], 'Neplatný'));
 
 // ── 8. Wrong username ────────────────────────────────────────────────────────
 $loginPage = req('GET', '/login', cookieJar: $jar3);
@@ -246,7 +254,7 @@ $res = req('POST', '/login', [
 ], $jar3);
 
 ok('Nonexistent username stays on login page (200)', $res['status'] === 200);
-ok('Nonexistent username shows error message', str_contains($res['body'], 'Invalid') || str_contains($res['body'], 'Neplatné') || str_contains($res['body'], 'Neplatný'));
+ok('Nonexistent username shows error message', yc_str_contains($res['body'], 'Invalid') || yc_str_contains($res['body'], 'Neplatné') || yc_str_contains($res['body'], 'Neplatný'));
 
 // ── Cleanup ───────────────────────────────────────────────────────────────────
 @unlink($jar);

@@ -6,7 +6,7 @@ return function (): void {
         return;
     }
     foreach (file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
-        if (str_starts_with(trim($line), '#') || !str_contains($line, '=')) {
+        if (strpos(trim($line), '#') === 0 || strpos($line, '=') === false) {
             continue;
         }
         [$key, $value] = explode('=', $line, 2);

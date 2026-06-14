@@ -18,7 +18,7 @@ class View
         require BASE_PATH . '/views/layout/footer.php';
     }
 
-    public static function e(mixed $value): string
+    public static function e($value): string
     {
         return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
     }

@@ -167,12 +167,15 @@ class StoryController
         Response::redirect('/');
     }
 
-    private function filterGenres(mixed $input): array
+    private function filterGenres($input): array
     {
         if (!is_array($input)) {
             return [];
         }
-        return array_values(array_filter($input, fn($g) => in_array($g, self::GENRES, true)));
+        $genres = self::GENRES;
+        return array_values(array_filter($input, function ($g) use ($genres) {
+            return in_array($g, $genres, true);
+        }));
     }
 
     private function resolveCommentAnchors(string $html, array &$comments): void

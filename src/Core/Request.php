@@ -4,8 +4,8 @@ namespace App\Core;
 
 class Request
 {
-    public readonly string $method;
-    public readonly string $path;
+    public $method;
+    public $path;
 
     public function __construct()
     {
@@ -14,12 +14,12 @@ class Request
         $this->path = '/' . ltrim($path, '/');
     }
 
-    public function post(string $key, mixed $default = null): mixed
+    public function post(string $key, $default = null)
     {
         return $_POST[$key] ?? $default;
     }
 
-    public function get(string $key, mixed $default = null): mixed
+    public function get(string $key, $default = null)
     {
         return $_GET[$key] ?? $default;
     }

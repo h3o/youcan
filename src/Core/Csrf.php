@@ -20,7 +20,7 @@ class Csrf
         return $token !== '' && hash_equals($token, $submitted);
     }
 
-    public static function fail(): never
+    public static function fail(): void
     {
         http_response_code(419);
         exit('Invalid or missing CSRF token.');

@@ -1,0 +1,162 @@
+========================================================
+  AJ TY MÔŽEŠ — Popis funkcionality webstránky
+========================================================
+
+Verzia dokumentu: jún 2026
+
+
+ÚČEL STRÁNKY
+------------
+„Aj ty môžeš" je verejne dostupná platforma pre zdieľanie krátkych príbehov.
+Jej cieľom je vytvoriť priateľské spisovateľské spoločenstvo, kde môže každý
+publikovať vlastné texty, objavovať príbehy ostatných a vzájomne si poskytovať
+spätnú väzbu — či už ku celému dielu, alebo priamo k vybranej časti textu.
+
+
+TECHNICKÝ ZÁKLAD
+----------------
+- Backend:   PHP 8.4 (vlastný framework bez knižníc tretích strán)
+- Databáza:  MariaDB (správa cez phpMyAdmin)
+- Frontend:  moderné HTML/CSS + vanilla JavaScript
+- Editor:    Quill.js (rich-text WYSIWYG editor)
+- Hosting:   Apache 2 na Debian 13
+
+
+JAZYKOVÉ MUTÁCIE
+----------------
+Stránka je plne lokalizovaná do štyroch jazykov:
+
+  SK — Slovenčina  (primárny jazyk)
+  CZ — Čeština
+  EN — Angličtina
+  KL — Klingončina  (pre pobavenie)
+
+Jazyk sa prepína jedným kliknutím v navigačnej lište a uloží sa do relácie
+(session). Všetky texty vrátane chybových hlášok, popiskov formulárov
+a systémových správ sú preložené. V slovenčine a češtine je dôsledne
+používané tykanie, ktoré zodpovedá neformálnemu, komunitnému charakteru
+stránky.
+
+
+POUŽÍVATEĽSKÉ ÚČTY
+------------------
+Registrácia
+  - Každý návštevník si môže bezplatne vytvoriť účet.
+  - Požadované údaje: používateľské meno (3–30 znakov, písmená/číslice/
+    podčiarkovník), e-mailová adresa a heslo (min. 8 znakov).
+  - Systém automaticky overí, či dané meno alebo e-mail už nie sú obsadené.
+  - Po úspešnej registrácii je používateľ ihneď prihlásený.
+
+Prihlásenie
+  - Možnosť prihlásiť sa pomocou používateľského mena ALEBO e-mailovej adresy.
+  - Heslá sú uložené ako bcrypt hash (cost 12) — nikdy v čitateľnej podobe.
+  - Po prihlásení je vygenerované nové ID relácie (ochrana pred session
+    fixation útokmi).
+
+Profil
+  - Každý používateľ má verejnú profilovú stránku dostupnú na /profile/meno.
+  - Zobrazuje sa dátum registrácie a zoznam všetkých zverejnených príbehov.
+
+
+PRÍBEHY
+-------
+Zverejnenie príbehu
+  - Prihlásený používateľ môže napísať a zverejniť príbeh cez rich-text editor
+    (tučné písmo, kurzíva, podčiarknutie, nadpisy, citáty, zoznamy, odkazy).
+  - Každý príbeh má názov a voliteľný výber žánrov (možno vybrať viac naraz):
+      Fantasy, Sci-Fi, Horor, Romantika, Detektívka, Thriller,
+      Historický, Literárna fikcia, Dobrodružstvo, Iné.
+  - Žánre sa na stránke zobrazujú ako farebné štítky (pills).
+
+Čítanie príbehu
+  - Príbehy sú dostupné aj neprihlásenim používateľom.
+  - Stránka príbehu zobrazuje: žánre, nadpis, meno autora, dátum, počet
+    zobrazení a srdcia (lajky).
+
+Úprava a mazanie
+  - Autor môže svoj príbeh kedykoľvek upraviť alebo natrvalo zmazať.
+  - Pred zmazaním sa zobrazí potvrdzovacie okno.
+
+Počítadlo zobrazení
+  - Každé načítanie stránky príbehu sa započíta do štatistiky zobrazení.
+
+
+LAJKY (SRDCIA)
+--------------
+  - Prihlásený čitateľ môže príbeh „oliajkovať" kliknutím na tlačidlo ♥.
+  - Ďalším kliknutím lajk odoberie (prepínací mechanizmus).
+  - Počet lajkov sa aktualizuje bez obnovenia stránky (AJAX).
+  - Neprihlásený používateľ je po kliknutí presmerovaný na prihlásenie.
+
+
+KOMENTÁRE
+---------
+Stránka podporuje dva typy komentárov:
+
+1. Komentár k celému príbehu
+   - Klasická sekcia komentárov pod textom príbehu.
+   - Každý komentár môže dostať jednu úroveň odpovedí (reply); odpovede
+     na odpovede nie sú povolené.
+   - Komentáre sú radené chronologicky.
+
+2. Inline anotácia (komentár k vybranej časti textu)
+   - Čitateľ označí ľubovoľné slovo, frázu alebo vetu v tele príbehu.
+   - Nad výberom sa zobrazí plávajúca bublina s tlačidlom „Pridať poznámku".
+   - Po kliknutí sa otvorí bočný panel (na mobile: spodný panel) s citátom
+     vybraného textu a formulárom na napísanie komentára.
+   - Uložená anotácia sa zobrazí ako žlté zvýraznenie priamo v texte.
+     V okraji vedľa textu sa zobrazí ikona 💬 ako rýchly prístup.
+   - Kliknutím na zvýraznenie alebo ikonu sa otvorí panel s komentárom
+     a možnosťou odpovedať.
+   - Inline anotácie tiež podporujú jednu úroveň odpovedí.
+
+Kotvenie anotácií
+   - Systém si pamätá presnú polohu anotácie pomocou: vybraného textu,
+     kontextu pred ním a za ním (100 znakov) a poradia výskytu (pre prípad,
+     že sa rovnaký text v príbehu opakuje viac ráz).
+   - Pri každom načítaní stránky sa poloha anotácie znovu overí voči
+     aktuálnemu textu príbehu.
+   - Ak autor upraví príbeh a označený text sa v ňom už nenachádza,
+     anotácia sa označí ako „odpojená" (detached) a zobrazí sa v osobitnej
+     sekcii pod príbehom s ikonou ⚠️ a pôvodnou citáciou v tooltip texte.
+     Komentár sa nestratí — je len oddelený od textu.
+
+Mazanie komentárov
+   - Komentár môže zmazať jeho autor ALEBO autor príbehu, ku ktorému
+     komentár patrí.
+
+
+ZABEZPEČENIE
+------------
+  - CSRF ochrana: každý formulár aj AJAX požiadavka obsahuje jednorazový
+    token overovaný na serveri.
+  - Heslá: bcrypt s cost faktorom 12.
+  - Vstupné dáta: všetky výstupy sú escapované (htmlspecialchars), obsah
+    príbehov prechádza cez HTMLPurifier (whitelist HTML tagov).
+  - Autentifikácia: po prihlásení sa vygeneruje nové session ID.
+  - AJAX chyby: neprihlásený používateľ pri AJAX požiadavke dostane
+    odpoveď 401 (nie presmerovanie) pre správne spracovanie na strane JS.
+
+
+NAVIGÁCIA
+---------
+  /                     — Úvodná stránka so zoznamom príbehov
+  /stories/create       — Formulár na vytvorenie nového príbehu
+  /stories/{slug}       — Stránka príbehu
+  /stories/{slug}/edit  — Úprava príbehu (len autor)
+  /profile/{meno}       — Verejný profil používateľa
+  /register             — Registrácia
+  /login                — Prihlásenie
+  /logout               — Odhlásenie (POST)
+  /lang/{kód}           — Prepnutie jazyka (sk / cs / en / kl)
+
+
+PLÁNOVANÉ FUNKCIE (v2)
+-----------------------
+  - Rozpracované príbehy (draft mode) — uloženie bez zverejnenia
+  - Profilové fotografie (avatar upload)
+  - Fulltextové vyhľadávanie príbehov
+  - Obmedzenie prístupu k phpMyAdmin len z lokálnej siete po spustení
+    verejného port-forwardingu
+
+========================================================

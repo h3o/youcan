@@ -5,8 +5,8 @@ namespace App\Core;
 class Lang
 {
     private const SUPPORTED = ['en', 'sk', 'cs', 'kl'];
-    private static string $locale = 'en';
-    private static array $strings = [];
+    private static $locale = 'en';
+    private static $strings = [];
 
     public static function init(): void
     {
@@ -35,7 +35,7 @@ class Lang
             return $key;
         }
         static $en = null;
-        $en ??= require BASE_PATH . '/lang/en.php';
+        $en = $en ?? require BASE_PATH . '/lang/en.php';
         return $en[$key] ?? $key;
     }
 
@@ -46,10 +46,7 @@ class Lang
 
     public static function htmlLang(): string
     {
-        return match (self::$locale) {
-            'kl'    => 'tlh',
-            default => self::$locale,
-        };
+        return self::$locale === 'kl' ? 'tlh' : self::$locale;
     }
 
     public static function supported(): array

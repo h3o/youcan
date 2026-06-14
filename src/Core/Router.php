@@ -4,7 +4,7 @@ namespace App\Core;
 
 class Router
 {
-    private array $routes = [];
+    private $routes = [];
 
     public function get(string $path, array $handler, bool $auth = false): void
     {

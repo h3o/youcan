@@ -4,14 +4,14 @@ namespace App\Core;
 
 class Response
 {
-    public static function redirect(string $url, int $status = 302): never
+    public static function redirect(string $url, int $status = 302): void
     {
         http_response_code($status);
         header('Location: ' . $url);
         exit;
     }
 
-    public static function json(mixed $data, int $status = 200): never
+    public static function json($data, int $status = 200): void
     {
         http_response_code($status);
         header('Content-Type: application/json; charset=utf-8');
@@ -19,13 +19,14 @@ class Response
         exit;
     }
 
-    public static function abort(int $status): never
+    public static function abort(int $status): void
     {
         http_response_code($status);
-        $template = match ($status) {
-            403     => 'errors/403',
-            default => 'errors/404',
-        };
+        if ($status === 403) {
+            $template = 'errors/403';
+        } else {
+            $template = 'errors/404';
+        }
         View::render($template, ['pageTitle' => $status === 403 ? 'Forbidden' : 'Not Found']);
         exit;
     }

@@ -3,7 +3,7 @@
     "description": "YouCan short story publishing platform",
     "type": "project",
     "require": {
-        "php": "^8.4",
+        "php": ">=7.3",
         "ezyang/htmlpurifier": "^4.17"
     },
     "autoload": {
