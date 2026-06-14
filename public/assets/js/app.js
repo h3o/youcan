@@ -142,8 +142,8 @@ function initAnnotations() {
                 separateWordSearch: false,
                 acrossElements:     true,
                 className:          'annotation-mark',
-                filter: (_node, _term, _total, count) => {
-                    return count === target;
+                filter: () => {
+                    return matchCount++ === target;
                 },
                 each: el => {
                     el.dataset.commentId = c.id;
