@@ -209,7 +209,9 @@ img, svg { display: block; max-width: 100%; }
 
 /* ── Hero ──────────────────────────────────────────────────────────────────── */
 .hero {
-    background: linear-gradient(135deg, #1A1A2E 0%, #2D6A4F 100%);
+    background:
+        linear-gradient(135deg, rgba(26,26,46,.72) 0%, rgba(45,106,79,.62) 100%),
+        url('https://images.unsplash.com/photo-1530819568329-97653eafbbfa?w=1920&q=80&auto=format&fit=crop') center 70%/cover no-repeat;
     color: #fff;
     padding: 5rem 1.25rem;
     text-align: center;
