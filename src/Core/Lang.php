@@ -5,13 +5,13 @@ namespace App\Core;
 class Lang
 {
     private const SUPPORTED = ['en', 'sk', 'cs', 'kl'];
-    private static $locale = 'en';
+    private static $locale = 'sk';
     private static $strings = [];
 
     public static function init(): void
     {
-        $locale = $_SESSION['locale'] ?? 'en';
-        self::setLocale(in_array($locale, self::SUPPORTED, true) ? $locale : 'en');
+        $locale = $_SESSION['locale'] ?? 'sk';
+        self::setLocale(in_array($locale, self::SUPPORTED, true) ? $locale : 'sk');
     }
 
     public static function setLocale(string $locale): void
