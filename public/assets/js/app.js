@@ -1,12 +1,13 @@
 /* YouCan — app.js */
 
+// Module-level so every function (including initAnnotations) can access it
+const BASE = (document.querySelector('meta[name="base-url"]') || {}).content || '';
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── CSRF token & base URL ─────────────────────────────────────────────────
+    // ── CSRF token ────────────────────────────────────────────────────────────
     const csrfMeta  = document.querySelector('meta[name="csrf-token"]');
     const csrfToken = csrfMeta ? csrfMeta.content : '';
-    const baseMeta  = document.querySelector('meta[name="base-url"]');
-    const BASE      = baseMeta ? baseMeta.content : '';
 
     // ── Mobile nav toggle ─────────────────────────────────────────────────────
     const navToggle = document.querySelector('.nav__toggle');
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.like-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
             if (btn.dataset.loginRequired) {
-                window.location.href = '/login';
+                window.location.href = BASE + '/login';
                 return;
             }
 
@@ -249,7 +250,7 @@ function initAnnotations() {
     document.getElementById('bubble-btn')?.addEventListener('click', () => {
         hideBubble();
         if (!pendingAnchor) return;
-        if (!YC.isLoggedIn) { window.location.href = '/login'; return; }
+        if (!YC.isLoggedIn) { window.location.href = BASE + '/login'; return; }
         openPanelNew(pendingAnchor);
     });
 
