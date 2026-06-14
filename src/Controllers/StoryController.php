@@ -9,6 +9,7 @@ use App\Core\Session;
 use App\Core\View;
 use App\Helpers\Purifier;
 use App\Helpers\Slug;
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Story;
 
@@ -77,11 +78,21 @@ class StoryController
         $likeCount = Like::countForStory($story['id']);
         $userLiked = Auth::check() ? Like::userLiked(Auth::id(), $story['id']) : false;
 
+        // Fetch comments and re-resolve inline anchors
+        $grouped    = Comment::getForStory((int)$story['id']);
+        $inlineComments  = $grouped['inline'];
+        $storyComments   = $grouped['story'];
+        $detachedComments = $grouped['detached'];
+        $this->resolveCommentAnchors($story['content'], $inlineComments);
+
         View::render('stories/show', [
-            'pageTitle' => View::e($story['title']) . ' — ' . t('site.name'),
-            'story'     => $story,
-            'likeCount' => $likeCount,
-            'userLiked' => $userLiked,
+            'pageTitle'        => View::e($story['title']) . ' — ' . t('site.name'),
+            'story'            => $story,
+            'likeCount'        => $likeCount,
+            'userLiked'        => $userLiked,
+            'inlineComments'   => $inlineComments,
+            'storyComments'    => $storyComments,
+            'detachedComments' => $detachedComments,
         ]);
     }
 
@@ -162,6 +173,52 @@ class StoryController
             return [];
         }
         return array_values(array_filter($input, fn($g) => in_array($g, self::GENRES, true)));
+    }
+
+    private function resolveCommentAnchors(string $html, array &$comments): void
+    {
+        if (empty($comments)) {
+            return;
+        }
+        $plain = html_entity_decode(strip_tags($html), ENT_QUOTES, 'UTF-8');
+
+        foreach ($comments as &$c) {
+            $needle = $c['anchor_text'] ?? '';
+            if (!$needle) {
+                continue;
+            }
+
+            $positions = [];
+            $offset    = 0;
+            while (($pos = mb_strpos($plain, $needle, $offset)) !== false) {
+                $positions[] = $pos;
+                $offset = $pos + 1;
+            }
+
+            if (empty($positions)) {
+                $c['anchor_detached'] = 1;
+                Comment::markDetached((int)$c['id']);
+                continue;
+            }
+
+            $best = 0;
+            if (count($positions) > 1) {
+                $bestScore = -1;
+                $len       = mb_strlen($needle);
+                foreach ($positions as $i => $pos) {
+                    $pre = mb_substr($plain, max(0, $pos - 100), 100);
+                    $suf = mb_substr($plain, $pos + $len, 100);
+                    similar_text($pre, $c['anchor_prefix'] ?? '', $pct1);
+                    similar_text($suf, $c['anchor_suffix'] ?? '', $pct2);
+                    if (($pct1 + $pct2) > $bestScore) {
+                        $bestScore = $pct1 + $pct2;
+                        $best = $i;
+                    }
+                }
+            }
+            $c['occurrence_idx'] = $best;
+        }
+        unset($c);
     }
 
     private function validateStory(string $title, array $genres, string $content): array

@@ -8,6 +8,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script>
 <script src="/assets/js/app.js"></script>
 </body>
 </html>

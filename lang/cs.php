@@ -53,6 +53,7 @@
     'auth.sign_in_link'       => 'Přihlásit se',
 
     // Auth — login
+    'auth.identifier'         => 'Uživatelské jméno nebo e-mail',
     'auth.welcome_back'       => 'Vítejte zpět',
     'auth.subtitle_login'     => 'Přihlaste se a pokračujte v psaní.',
     'auth.login_btn'          => 'Přihlásit se',
@@ -80,9 +81,25 @@
     'error.passwords_mismatch'=> 'Hesla se neshodují.',
     'error.username_taken'    => 'Toto uživatelské jméno je již obsazeno.',
     'error.email_taken'       => 'Účet s tímto e-mailem již existuje.',
-    'error.invalid_credentials' => 'Neplatný e-mail nebo heslo.',
+    'error.invalid_credentials' => 'Neplatné jméno/e-mail nebo heslo.',
     'error.title_length'      => 'Název musí mít mezi 1 a 255 znaky.',
     'error.content_empty'     => 'Obsah příběhu nemůže být prázdný.',
+
+    // Comments
+    'comment.heading'          => 'Komentáře',
+    'comment.inline_heading'   => 'Poznámky v textu',
+    'comment.detached_heading' => 'Odpojené anotace',
+    'comment.detached_tooltip' => 'Původně vázáno na: ":text"',
+    'comment.add_note'         => 'Přidat poznámku',
+    'comment.add_placeholder'  => 'Napište komentář…',
+    'comment.submit'           => 'Odeslat',
+    'comment.reply'            => 'Odpovědět',
+    'comment.reply_placeholder'=> 'Napište odpověď…',
+    'comment.delete'           => 'Smazat',
+    'comment.delete_confirm'   => 'Smazat tento komentář?',
+    'comment.login_prompt'     => 'Přihlaste se pro komentování',
+    'comment.no_comments'      => 'Zatím žádné komentáře. Buďte první!',
+    'comment.select_hint'      => 'Označte libovolný text pro přidání poznámky.',
 
     // Genres
     'genre.Fantasy'           => 'Fantasy',

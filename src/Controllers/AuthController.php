@@ -78,11 +78,14 @@ class AuthController
     {
         Csrf::validate($_POST['_csrf'] ?? '') || Csrf::fail();
 
-        $email    = trim($_POST['email'] ?? '');
-        $password = $_POST['password'] ?? '';
-        $errors   = [];
+        $identifier = trim($_POST['identifier'] ?? '');
+        $password   = $_POST['password'] ?? '';
+        $errors     = [];
 
-        $user = User::findByEmail($email);
+        $user = filter_var($identifier, FILTER_VALIDATE_EMAIL)
+            ? User::findByEmail($identifier)
+            : User::findByUsername($identifier);
+
         if (!$user || !password_verify($password, $user['password'])) {
             $errors['form'] = t('error.invalid_credentials');
         }
@@ -91,7 +94,7 @@ class AuthController
             View::render('auth/login', [
                 'pageTitle' => t('auth.welcome_back'),
                 'errors'    => $errors,
-                'old'       => ['email' => $email],
+                'old'       => ['identifier' => $identifier],
             ]);
             return;
         }

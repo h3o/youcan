@@ -53,6 +53,7 @@
     'auth.sign_in_link'       => 'Sign in',
 
     // Auth — login
+    'auth.identifier'         => 'Username or Email',
     'auth.welcome_back'       => 'Welcome back',
     'auth.subtitle_login'     => 'Sign in to continue writing.',
     'auth.login_btn'          => 'Sign In',
@@ -80,9 +81,25 @@
     'error.passwords_mismatch'=> 'Passwords do not match.',
     'error.username_taken'    => 'That username is already taken.',
     'error.email_taken'       => 'An account with that email already exists.',
-    'error.invalid_credentials' => 'Invalid email or password.',
+    'error.invalid_credentials' => 'Invalid username/email or password.',
     'error.title_length'      => 'Title must be between 1 and 255 characters.',
     'error.content_empty'     => 'Story content cannot be empty.',
+
+    // Comments
+    'comment.heading'          => 'Comments',
+    'comment.inline_heading'   => 'Inline Notes',
+    'comment.detached_heading' => 'Detached Annotations',
+    'comment.detached_tooltip' => 'Originally anchored to: ":text"',
+    'comment.add_note'         => 'Add note',
+    'comment.add_placeholder'  => 'Write a comment…',
+    'comment.submit'           => 'Post',
+    'comment.reply'            => 'Reply',
+    'comment.reply_placeholder'=> 'Write a reply…',
+    'comment.delete'           => 'Delete',
+    'comment.delete_confirm'   => 'Delete this comment?',
+    'comment.login_prompt'     => 'Sign in to comment',
+    'comment.no_comments'      => 'No comments yet. Be the first!',
+    'comment.select_hint'      => 'Select any text to add an inline note.',
 
     // Genres (stored as English keys, translated for display)
     'genre.Fantasy'           => 'Fantasy',

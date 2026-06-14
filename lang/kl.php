@@ -53,6 +53,7 @@
     'auth.sign_in_link'       => "yI'el",
 
     // Auth — login
+    'auth.identifier'         => "pongwIj pagh De'",  // My name or data
     'auth.welcome_back'       => "pa' SoH!",          // You are back! (roughly)
     'auth.subtitle_login'     => "yI'el. yIqon.",     // Enter. Write.
     'auth.login_btn'          => "yI'el",             // Enter!
@@ -83,6 +84,22 @@
     'error.invalid_credentials' => "De' Daj Qub.",   // Wrong data.
     'error.title_length'      => "pong nI' law' pIm.",
     'error.content_empty'     => "mu' ghajbe'.",      // Has no tale.
+
+    // Comments
+    'comment.heading'          => "QInmey",             // messages/notes
+    'comment.inline_heading'   => "mu' QInmey",         // text notes
+    'comment.detached_heading' => "loj QInmey",         // lost notes
+    'comment.detached_tooltip' => "mu'vam qonlu'pu': \":text\"",
+    'comment.add_note'         => "yIqon!",             // Write it!
+    'comment.add_placeholder'  => "QIn yIqon…",        // Write a message…
+    'comment.submit'           => "yIlI'",              // Send it!
+    'comment.reply'            => "yIjang",             // Answer!
+    'comment.reply_placeholder'=> "jang yIqon…",
+    'comment.delete'           => "yIQaw'",             // Destroy it!
+    'comment.delete_confirm'   => "QIn DaQaw'?",        // Destroy the message?
+    'comment.login_prompt'     => "yI'el QInmeylI'vaD", // Enter for your messages
+    'comment.no_comments'      => "QInmey tu'lu'be'.",  // No messages exist.
+    'comment.select_hint'      => "mu' yIwIv QIn DaqonmeH.", // Select text to write a note.
 
     // Genres
     'genre.Fantasy'           => 'naj',               // dream

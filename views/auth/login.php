@@ -11,10 +11,10 @@
             <?= \App\Core\Csrf::field() ?>
 
             <div class="form-group">
-                <label class="form-group__label" for="email"><?= htmlspecialchars(t('auth.email'), ENT_QUOTES, 'UTF-8') ?></label>
-                <input class="form-group__input" type="email" id="email" name="email"
-                       value="<?= htmlspecialchars($old['email'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                       autocomplete="email" required>
+                <label class="form-group__label" for="identifier"><?= htmlspecialchars(t('auth.identifier'), ENT_QUOTES, 'UTF-8') ?></label>
+                <input class="form-group__input" type="text" id="identifier" name="identifier"
+                       value="<?= htmlspecialchars($old['identifier'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                       autocomplete="username" required>
             </div>
 
             <div class="form-group">

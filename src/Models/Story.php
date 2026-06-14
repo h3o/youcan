@@ -53,6 +53,16 @@ class Story
         return $stmt->fetch() ?: null;
     }
 
+    public static function findById(int $id): ?array
+    {
+        $db   = Database::getInstance();
+        $stmt = $db->prepare(
+            'SELECT s.*, u.username FROM stories s JOIN users u ON u.id = s.user_id WHERE s.id = ?'
+        );
+        $stmt->execute([$id]);
+        return $stmt->fetch() ?: null;
+    }
+
     public static function create(int $userId, string $title, string $slug, string $content, array $genres): int
     {
         $db     = Database::getInstance();
