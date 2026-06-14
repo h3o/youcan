@@ -58,7 +58,7 @@
     'auth.subtitle_login'     => 'Sign in to continue writing.',
     'auth.login_btn'          => 'Sign In',
     'auth.no_account'         => "Don't have an account?",
-    'auth.join_link'          => 'Join :site',
+    'auth.join_link'          => 'You Can Join Us Too!',
 
     // Profile
     'profile.joined'          => 'Joined',

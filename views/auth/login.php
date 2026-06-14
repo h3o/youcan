@@ -27,6 +27,6 @@
         </form>
 
         <p class="auth-card__switch"><?= htmlspecialchars(t('auth.no_account'), ENT_QUOTES, 'UTF-8') ?>
-           <a href="/register"><?= htmlspecialchars(t('auth.join_link', ['site' => t('site.name')]), ENT_QUOTES, 'UTF-8') ?></a></p>
+           <a href="/register"><?= htmlspecialchars(t('auth.join_link'), ENT_QUOTES, 'UTF-8') ?></a></p>
     </div>
 </div>

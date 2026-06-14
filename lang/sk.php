@@ -58,7 +58,7 @@
     'auth.subtitle_login'     => 'Prihlás sa a pokračuj v písaní.',
     'auth.login_btn'          => 'Prihlásiť sa',
     'auth.no_account'         => 'Nemáš účet?',
-    'auth.join_link'          => 'Registruj sa na :site',
+    'auth.join_link'          => 'Aj ty sa môžeš zaregistrovať!',
 
     // Profile
     'profile.joined'          => 'Registrovaný od',

@@ -33,9 +33,9 @@ $activeLang = fn(string $code) => $locale === $code ? 'lang-switcher__btn--activ
             <?php endif; ?>
             <li>
                 <div class="lang-switcher">
-                    <a href="/lang/en" class="lang-switcher__btn <?= $activeLang('en') ?>">EN</a>
                     <a href="/lang/sk" class="lang-switcher__btn <?= $activeLang('sk') ?>">SK</a>
-                    <a href="/lang/cs" class="lang-switcher__btn <?= $activeLang('cs') ?>">CS</a>
+                    <a href="/lang/cs" class="lang-switcher__btn <?= $activeLang('cs') ?>">CZ</a>
+                    <a href="/lang/en" class="lang-switcher__btn <?= $activeLang('en') ?>">EN</a>
                     <a href="/lang/kl" class="lang-switcher__btn <?= $activeLang('kl') ?>">KL</a>
                 </div>
             </li>

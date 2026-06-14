@@ -58,7 +58,7 @@
     'auth.subtitle_login'     => "yI'el. yIqon.",     // Enter. Write.
     'auth.login_btn'          => "yI'el",             // Enter!
     'auth.no_account'         => "ghap DaghajQo'?",   // You don't have an account?
-    'auth.join_link'          => ":site yI'el",
+    'auth.join_link'          => "bIlajlaH je!",   // You can too!
 
     // Profile
     'profile.joined'          => "Hu'",               // woke up / joined
