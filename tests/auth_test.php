@@ -254,8 +254,9 @@ ok('Nonexistent username shows error message', str_contains($res['body'], 'Inval
 @unlink($jar3);
 
 // Remove test user from DB
-require dirname(__DIR__) . '/vendor/autoload.php';
-(require dirname(__DIR__) . '/src/Core/env.php')();
+define('BASE_PATH', dirname(__DIR__));
+require BASE_PATH . '/vendor/autoload.php';
+(require BASE_PATH . '/src/Core/env.php')();
 
 $pdo = new PDO(
     'mysql:host=' . $_ENV['DB_HOST'] . ';dbname=' . $_ENV['DB_NAME'] . ';charset=utf8mb4',

@@ -17,7 +17,7 @@ class User
     public static function findByUsername(string $username): ?array
     {
         $db   = Database::getInstance();
-        $stmt = $db->prepare('SELECT id, username, email, bio, created_at FROM users WHERE username = ?');
+        $stmt = $db->prepare('SELECT id, username, email, password, bio, created_at FROM users WHERE username = ?');
         $stmt->execute([$username]);
         return $stmt->fetch() ?: null;
     }
