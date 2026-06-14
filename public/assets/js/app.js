@@ -131,7 +131,7 @@ function initAnnotations() {
         if (!YC.comments || !YC.comments.length || typeof Mark === 'undefined') return;
 
         YC.comments.forEach(c => {
-            if (c.anchor_detached || !c.anchor_text) return;
+            if (+c.anchor_detached || !c.anchor_text) return;
 
             let matchCount = 0;
             const target = parseInt(c.occurrence_idx, 10) || 0;

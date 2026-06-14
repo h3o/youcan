@@ -56,6 +56,9 @@ class Comment
 
         foreach ($tops as $c) {
             $c['replies'] = $replyMap[(int)$c['id']] ?? [];
+            // Cast to int so PHP 7.3 PDO string "0"/"1" becomes 0/1 in JSON
+            $c['anchor_detached'] = (int)$c['anchor_detached'];
+            $c['occurrence_idx']  = (int)$c['occurrence_idx'];
             if ($c['type'] === 'inline') {
                 if ($c['anchor_detached']) {
                     $detached[] = $c;
