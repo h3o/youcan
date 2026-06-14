@@ -73,7 +73,11 @@ class StoryController
             Response::abort(404);
         }
 
-        Story::incrementViews($story['id']);
+        $viewedKey = 'viewed_story_' . $story['id'];
+        if (!Session::get($viewedKey)) {
+            Story::incrementViews($story['id']);
+            Session::set($viewedKey, true);
+        }
 
         $likeCount = Like::countForStory($story['id']);
         $userLiked = Auth::check() ? Like::userLiked(Auth::id(), $story['id']) : false;
