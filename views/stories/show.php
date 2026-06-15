@@ -92,7 +92,7 @@ function renderComment(array $c, bool $isReply, string $slug, bool $isStoryOwner
                 <label class="secret-link-box__label"><?= htmlspecialchars(t('story.secret_link_label'), ENT_QUOTES, 'UTF-8') ?></label>
                 <div class="secret-link-box__row">
                     <input type="text" class="secret-link-box__input" id="secret-link-input" readonly
-                           value="<?= htmlspecialchars(url('/stories/' . $slug . '?key=' . $story['secret_token']), ENT_QUOTES, 'UTF-8') ?>">
+                           value="<?= htmlspecialchars(absUrl('/stories/' . $slug . '?key=' . $story['secret_token']), ENT_QUOTES, 'UTF-8') ?>">
                     <button type="button" class="btn btn--ghost btn--sm" id="secret-link-copy">
                         <?= htmlspecialchars(t('story.secret_link_copy'), ENT_QUOTES, 'UTF-8') ?>
                     </button>

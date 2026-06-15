@@ -17,7 +17,7 @@ use App\Core\Url;
 Session::start();
 
 // Initialize base URL (e.g. '/ajty' for subdirectory hosting, '' for root)
-Url::init($_ENV['APP_BASE'] ?? '');
+Url::init($_ENV['APP_BASE'] ?? '', $_ENV['APP_URL'] ?? '');
 
 // Initialize localization
 Lang::init();
@@ -31,6 +31,11 @@ function t(string $key, array $params = []): string
 function url(string $path = '/'): string
 {
     return Url::to($path);
+}
+
+function absUrl(string $path = '/'): string
+{
+    return Url::absolute($path);
 }
 
 // Dispatch

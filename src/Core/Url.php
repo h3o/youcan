@@ -4,11 +4,19 @@ namespace App\Core;
 
 class Url
 {
-    private static $base = '';
+    private static $base    = '';
+    private static $appUrl  = '';
 
-    public static function init(string $base): void
+    public static function init(string $base, string $appUrl = ''): void
     {
-        self::$base = rtrim($base, '/');
+        self::$base   = rtrim($base, '/');
+        self::$appUrl = rtrim($appUrl, '/');
+    }
+
+    /** Build an absolute URL including scheme + host, e.g. https://example.com/ajty/stories/foo */
+    public static function absolute(string $path = '/'): string
+    {
+        return self::$appUrl . self::to($path);
     }
 
     /**
