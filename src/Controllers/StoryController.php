@@ -21,9 +21,13 @@ class StoryController
         'Adventure', 'Other',
     ];
 
+    private const LANGUAGES = ['sk', 'cs', 'en', 'de', 'pl', 'hu', 'uk', 'fr', 'es', 'it', 'other'];
+
+    private const VISIBILITIES = ['public', 'members', 'secret'];
+
     public function index(array $params): void
     {
-        $stories = Story::getRecent(20);
+        $stories = Story::getRecent(20, Auth::check());
         View::render('stories/index', [
             'pageTitle' => t('site.name'),
             'stories'   => $stories,
@@ -42,9 +46,11 @@ class StoryController
     {
         Csrf::validate($_POST['_csrf'] ?? '') || Csrf::fail();
 
-        $title   = trim($_POST['title'] ?? '');
-        $genres  = $this->filterGenres($_POST['genres'] ?? []);
-        $content = $_POST['content'] ?? '';
+        $title      = trim($_POST['title'] ?? '');
+        $genres     = $this->filterGenres($_POST['genres'] ?? []);
+        $content    = $_POST['content'] ?? '';
+        $language   = $this->filterLanguage($_POST['language'] ?? '');
+        $visibility = $this->filterVisibility($_POST['visibility'] ?? '');
 
         $errors = $this->validateStory($title, $genres, $content);
 
@@ -53,16 +59,17 @@ class StoryController
                 'pageTitle'      => t('story.write_heading'),
                 'genres'         => self::GENRES,
                 'errors'         => $errors,
-                'old'            => ['title' => $title, 'content' => $content],
+                'old'            => ['title' => $title, 'content' => $content, 'language' => $language, 'visibility' => $visibility],
                 'selectedGenres' => $genres,
             ]);
             return;
         }
 
-        $clean = Purifier::sanitize($content);
-        $slug  = Slug::generate($title);
+        $clean       = Purifier::sanitize($content);
+        $slug        = Slug::generate($title);
+        $secretToken = $visibility === 'secret' ? Story::generateSecretToken() : null;
 
-        Story::create(Auth::id(), $title, $slug, $clean, $genres);
+        Story::create(Auth::id(), $title, $slug, $clean, $genres, $language, $visibility, $secretToken);
         Response::redirect(url('/stories/' . $slug));
     }
 
@@ -71,6 +78,24 @@ class StoryController
         $story = Story::findBySlug($params['slug']);
         if (!$story) {
             Response::abort(404);
+        }
+
+        $currentUser = Auth::user();
+        $isOwner     = $currentUser && (int)$currentUser['id'] === (int)$story['user_id'];
+
+        // Enforce access control
+        $visibility = $story['visibility'] ?? 'public';
+        if ($visibility === 'members' && !Auth::check()) {
+            Session::flash('error', t('story.access_members'));
+            Response::redirect(url('/login'));
+            return;
+        }
+        if ($visibility === 'secret' && !$isOwner) {
+            $key = trim($_GET['key'] ?? '');
+            $token = $story['secret_token'] ?? '';
+            if (!$key || !$token || !hash_equals($token, $key)) {
+                Response::abort(403);
+            }
         }
 
         $viewedKey = 'viewed_story_' . $story['id'];
@@ -82,10 +107,9 @@ class StoryController
         $likeCount = Like::countForStory($story['id']);
         $userLiked = Auth::check() ? Like::userLiked(Auth::id(), $story['id']) : false;
 
-        // Fetch comments and re-resolve inline anchors
-        $grouped    = Comment::getForStory((int)$story['id']);
-        $inlineComments  = $grouped['inline'];
-        $storyComments   = $grouped['story'];
+        $grouped          = Comment::getForStory((int)$story['id']);
+        $inlineComments   = $grouped['inline'];
+        $storyComments    = $grouped['story'];
         $detachedComments = $grouped['detached'];
         $this->resolveCommentAnchors($story['content'], $inlineComments);
 
@@ -130,16 +154,18 @@ class StoryController
             Response::abort(403);
         }
 
-        $title   = trim($_POST['title'] ?? '');
-        $genres  = $this->filterGenres($_POST['genres'] ?? []);
-        $content = $_POST['content'] ?? '';
+        $title      = trim($_POST['title'] ?? '');
+        $genres     = $this->filterGenres($_POST['genres'] ?? []);
+        $content    = $_POST['content'] ?? '';
+        $language   = $this->filterLanguage($_POST['language'] ?? '');
+        $visibility = $this->filterVisibility($_POST['visibility'] ?? '');
 
         $errors = $this->validateStory($title, $genres, $content);
 
         if ($errors) {
             View::render('stories/edit', [
                 'pageTitle'      => t('story.edit_heading'),
-                'story'          => array_merge($story, ['title' => $title, 'content' => $content]),
+                'story'          => array_merge($story, ['title' => $title, 'content' => $content, 'language' => $language, 'visibility' => $visibility]),
                 'genres'         => self::GENRES,
                 'selectedGenres' => $genres,
                 'errors'         => $errors,
@@ -150,7 +176,14 @@ class StoryController
         $clean   = Purifier::sanitize($content);
         $newSlug = Slug::generate($title, (int)$story['id']);
 
-        Story::update($story['id'], $title, $newSlug, $clean, $genres);
+        // Keep existing token when staying secret; generate new if switching to secret; clear otherwise
+        if ($visibility === 'secret') {
+            $secretToken = $story['secret_token'] ?: Story::generateSecretToken();
+        } else {
+            $secretToken = null;
+        }
+
+        Story::update($story['id'], $title, $newSlug, $clean, $genres, $language, $visibility, $secretToken);
         Response::redirect(url('/stories/' . $newSlug));
     }
 
@@ -180,6 +213,17 @@ class StoryController
         return array_values(array_filter($input, function ($g) use ($genres) {
             return in_array($g, $genres, true);
         }));
+    }
+
+    private function filterLanguage(string $input): ?string
+    {
+        $input = trim($input);
+        return in_array($input, self::LANGUAGES, true) ? $input : null;
+    }
+
+    private function filterVisibility(string $input): string
+    {
+        return in_array($input, self::VISIBILITIES, true) ? $input : 'public';
     }
 
     private function resolveCommentAnchors(string $html, array &$comments): void

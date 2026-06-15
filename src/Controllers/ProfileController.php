@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Auth;
 use App\Core\Response;
 use App\Core\View;
 use App\Models\Story;
@@ -16,7 +17,9 @@ class ProfileController
             Response::abort(404);
         }
 
-        $stories = Story::getByUser((int)$user['id']);
+        $currentUser = Auth::user();
+        $isOwn       = $currentUser && (int)$currentUser['id'] === (int)$user['id'];
+        $stories     = Story::getByUser((int)$user['id'], $isOwn, Auth::check());
 
         View::render('profile/show', [
             'pageTitle'  => View::e($user['username']) . ' — YouCan',

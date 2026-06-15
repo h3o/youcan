@@ -101,6 +101,35 @@
     'comment.no_comments'      => 'No comments yet. Be the first!',
     'comment.select_hint'      => 'Select any text to add an inline note.',
 
+    // Story language & visibility
+    'story.language_label'    => 'Language',
+    'story.language_optional' => '(optional)',
+    'story.language_ph'       => '— unspecified —',
+    'story.vis_label'         => 'Visibility',
+    'story.vis_public'        => 'Everyone',
+    'story.vis_public_hint'   => 'Anyone can read this story.',
+    'story.vis_members'       => 'Registered users only',
+    'story.vis_members_hint'  => 'Only logged-in members can read this.',
+    'story.vis_secret'        => 'Secret link only',
+    'story.vis_secret_hint'   => 'Only people with the secret link can read this.',
+    'story.secret_link_label' => 'Secret link',
+    'story.secret_link_copy'  => 'Copy',
+    'story.secret_link_copied'=> 'Copied!',
+    'story.access_members'    => 'You need to be logged in to read this story.',
+
+    // Story language names
+    'lang.sk'    => 'Slovak',
+    'lang.cs'    => 'Czech',
+    'lang.en'    => 'English',
+    'lang.de'    => 'German',
+    'lang.pl'    => 'Polish',
+    'lang.hu'    => 'Hungarian',
+    'lang.uk'    => 'Ukrainian',
+    'lang.fr'    => 'French',
+    'lang.es'    => 'Spanish',
+    'lang.it'    => 'Italian',
+    'lang.other' => 'Other',
+
     // Genres (stored as English keys, translated for display)
     'genre.Fantasy'           => 'Fantasy',
     'genre.Science Fiction'   => 'Science Fiction',

@@ -62,6 +62,9 @@ CREATE TABLE `stories` (
   `slug` varchar(300) NOT NULL,
   `content` longtext NOT NULL,
   `genres` text DEFAULT NULL,
+  `language` varchar(10) DEFAULT NULL,
+  `visibility` enum('public','members','secret') NOT NULL DEFAULT 'public',
+  `secret_token` char(64) DEFAULT NULL,
   `view_count` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()

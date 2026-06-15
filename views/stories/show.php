@@ -87,6 +87,27 @@ function renderComment(array $c, bool $isReply, string $slug, bool $isStoryOwner
                     <button type="submit" class="btn btn--danger btn--sm"><?= htmlspecialchars(t('story.delete'), ENT_QUOTES, 'UTF-8') ?></button>
                 </form>
             </div>
+            <?php if (($story['visibility'] ?? 'public') === 'secret' && $story['secret_token']): ?>
+            <div class="secret-link-box">
+                <label class="secret-link-box__label"><?= htmlspecialchars(t('story.secret_link_label'), ENT_QUOTES, 'UTF-8') ?></label>
+                <div class="secret-link-box__row">
+                    <input type="text" class="secret-link-box__input" id="secret-link-input" readonly
+                           value="<?= htmlspecialchars(url('/stories/' . $slug . '?key=' . $story['secret_token']), ENT_QUOTES, 'UTF-8') ?>">
+                    <button type="button" class="btn btn--ghost btn--sm" id="secret-link-copy">
+                        <?= htmlspecialchars(t('story.secret_link_copy'), ENT_QUOTES, 'UTF-8') ?>
+                    </button>
+                </div>
+            </div>
+            <script>
+            document.getElementById('secret-link-copy')?.addEventListener('click', function() {
+                const input = document.getElementById('secret-link-input');
+                navigator.clipboard.writeText(input.value).then(() => {
+                    this.textContent = <?= json_encode(t('story.secret_link_copied')) ?>;
+                    setTimeout(() => { this.textContent = <?= json_encode(t('story.secret_link_copy')) ?>; }, 2000);
+                });
+            });
+            </script>
+            <?php endif; ?>
             <?php endif; ?>
         </footer>
     </article>

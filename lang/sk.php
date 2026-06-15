@@ -101,6 +101,35 @@
     'comment.no_comments'      => 'Zatiaľ žiadne komentáre. Buď prvý!',
     'comment.select_hint'      => 'Označ ľubovoľný text a pridaj poznámku.',
 
+    // Story language & visibility
+    'story.language_label'    => 'Jazyk',
+    'story.language_optional' => '(voliteľné)',
+    'story.language_ph'       => '— neurčený —',
+    'story.vis_label'         => 'Viditeľnosť',
+    'story.vis_public'        => 'Všetci',
+    'story.vis_public_hint'   => 'Príbeh môže čítať ktokoľvek.',
+    'story.vis_members'       => 'Len registrovaní',
+    'story.vis_members_hint'  => 'Čítať môžu len prihlásení členovia.',
+    'story.vis_secret'        => 'Len tajný odkaz',
+    'story.vis_secret_hint'   => 'Príbeh si môžu prečítať iba ľudia s tajným odkazom.',
+    'story.secret_link_label' => 'Tajný odkaz',
+    'story.secret_link_copy'  => 'Kopírovať',
+    'story.secret_link_copied'=> 'Skopírované!',
+    'story.access_members'    => 'Na čítanie tohto príbehu sa musíš prihlásiť.',
+
+    // Story language names
+    'lang.sk'    => 'Slovenčina',
+    'lang.cs'    => 'Čeština',
+    'lang.en'    => 'Angličtina',
+    'lang.de'    => 'Nemčina',
+    'lang.pl'    => 'Poľština',
+    'lang.hu'    => 'Maďarčina',
+    'lang.uk'    => 'Ukrajinčina',
+    'lang.fr'    => 'Francúzština',
+    'lang.es'    => 'Španielčina',
+    'lang.it'    => 'Taliančina',
+    'lang.other' => 'Iný',
+
     // Genres
     'genre.Fantasy'           => 'Fantasy',
     'genre.Science Fiction'   => 'Sci-Fi',

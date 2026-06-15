@@ -101,6 +101,35 @@
     'comment.no_comments'      => "QInmey tu'lu'be'.",  // No messages exist.
     'comment.select_hint'      => "mu' yIwIv QIn DaqonmeH.", // Select text to write a note.
 
+    // Story language & visibility
+    'story.language_label'    => "Hol",                 // language
+    'story.language_optional' => '(chaq)',
+    'story.language_ph'       => "— Hol Sovbe' —",      // language unknown
+    'story.vis_label'         => "leghlaHghach",        // viewability
+    'story.vis_public'        => "Hoch",                // everyone
+    'story.vis_public_hint'   => "Hoch ghot mu' laDlaH.", // Everyone can read the tale.
+    'story.vis_members'       => "ghot lo'wI' neH",     // only users
+    'story.vis_members_hint'  => "'elpu'bogh neH laDlaH.", // Only those who have entered can read.
+    'story.vis_secret'        => "pegh De' neH",        // secret data only
+    'story.vis_secret_hint'   => "pegh De' ghajbogh neH laDlaH.", // Only those with the secret can read.
+    'story.secret_link_label' => "pegh De'",            // secret data
+    'story.secret_link_copy'  => "yInap",               // copy it
+    'story.secret_link_copied'=> "naplu'pu'!",          // It has been copied!
+    'story.access_members'    => "mu' DalaDmeH yI'el.", // To read the tale, enter.
+
+    // Story language names
+    'lang.sk'    => 'Slovak Hol',
+    'lang.cs'    => 'Czech Hol',
+    'lang.en'    => 'tlhIngan Hol lo\'be\'bogh', // non-Klingon ;)
+    'lang.de'    => 'German Hol',
+    'lang.pl'    => 'Polish Hol',
+    'lang.hu'    => 'Hungarian Hol',
+    'lang.uk'    => 'Ukrainian Hol',
+    'lang.fr'    => 'French Hol',
+    'lang.es'    => 'Spanish Hol',
+    'lang.it'    => 'Italian Hol',
+    'lang.other' => 'latlh Hol',                // other language
+
     // Genres
     'genre.Fantasy'           => 'naj',               // dream
     'genre.Science Fiction'   => "Duj tIv",           // Ship enjoyment (space fun)
