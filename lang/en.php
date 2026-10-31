@@ -1,6 +1,6 @@
 <?php return [
     // Site
-    'site.name'               => 'You Can Too',
+    'site.name'               => 'You Can Betaread Too',
     'site.tagline'            => 'A place for stories.',
 
     // Navigation

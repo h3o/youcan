@@ -1,6 +1,6 @@
 <?php return [
     // Site (tlhIngan Hol — Klingon)
-    'site.name'               => "bIlajlaH je",      // "You Can Too" (roughly)
+    'site.name'               => "bIlajlaH Qaghmey tISam je",      // "You Can Proofread Too" (roughly)
     'site.tagline'            => "mu'mey DaH.",       // "The tales are now."
 
     // Navigation

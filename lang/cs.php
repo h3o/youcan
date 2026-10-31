@@ -1,6 +1,6 @@
 <?php return [
     // Site
-    'site.name'               => 'Ty taky můžeš',
+    'site.name'               => 'Ty taky můžeš betareadovat',
     'site.tagline'            => 'Místo pro příběhy.',
 
     // Navigation
