@@ -108,6 +108,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     });
 
+    // ── Reader settings (font, size, spacing, alignment, paragraphs, width) ───
+    const readerSettings = document.getElementById('reader-settings');
+    if (readerSettings) {
+        const STORAGE_KEY = 'youcan.reader';
+        const root   = document.documentElement;
+        const inputs = readerSettings.querySelectorAll('input[type="radio"]');
+
+        let settings = {};
+        try { settings = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch (e) {}
+
+        // Sync radios + <html data-reader-*> attributes; unknown stored values fall back to defaults
+        const applySettings = () => {
+            inputs.forEach(input => {
+                const stored = settings[input.name];
+                const known  = [...inputs].some(i => i.name === input.name && i.value === stored);
+                input.checked = known ? input.value === stored : input.defaultChecked;
+                if (input.checked) root.setAttribute('data-reader-' + input.name, input.value);
+            });
+            document.dispatchEvent(new Event('reader:layout'));
+        };
+
+        const saveSettings = () => {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(settings)); } catch (e) {}
+        };
+
+        inputs.forEach(input => {
+            input.addEventListener('change', () => {
+                settings[input.name] = input.value;
+                saveSettings();
+                applySettings();
+            });
+        });
+
+        document.getElementById('reader-settings-reset')?.addEventListener('click', () => {
+            settings = {};
+            saveSettings();
+            applySettings();
+        });
+
+        applySettings();
+    }
+
     // ── Inline annotation system ──────────────────────────────────────────────
     if (document.getElementById('story-body') && window.YOUCAN) {
         initAnnotations();
@@ -392,4 +434,9 @@ function initAnnotations() {
 
     // Apply highlights on load
     applyHighlights();
+
+    // Re-position badges whenever the text reflows (reader settings, resize, web fonts)
+    document.addEventListener('reader:layout', positionBadges);
+    window.addEventListener('resize', positionBadges);
+    if (document.fonts) document.fonts.ready.then(positionBadges);
 }

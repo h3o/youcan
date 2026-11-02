@@ -38,9 +38,28 @@ function renderComment(array $c, bool $isReply, string $slug, bool $isStoryOwner
     </div>
     <?php
 }
+
+// Reading settings: group => [default value, [value => label]]
+$readerSettings = [
+    'font'    => ['sans',   ['sans' => t('reader.font_sans'), 'serif' => t('reader.font_serif'), 'mono' => t('reader.font_mono')]],
+    'size'    => ['md',     ['sm' => 'S', 'md' => 'M', 'lg' => 'L', 'xl' => 'XL']],
+    'spacing' => ['normal', ['compact' => t('reader.spacing_compact'), 'normal' => t('reader.spacing_normal'), 'relaxed' => t('reader.spacing_relaxed')]],
+    'align'   => ['left',   ['left' => t('reader.align_left'), 'justify' => t('reader.align_justify')]],
+    'para'    => ['spaced', ['spaced' => t('reader.para_spaced'), 'indented' => t('reader.para_indented')]],
+    'width'   => ['normal', ['narrow' => t('reader.width_narrow'), 'normal' => t('reader.width_normal'), 'wide' => t('reader.width_wide')]],
+];
+$storyLang = in_array($story['language'] ?? '', ['', 'other'], true) ? '' : $story['language'];
 ?>
 
-<div class="container container--narrow">
+<!-- Apply saved reading settings before the story renders (avoids a layout jump) -->
+<script>
+try {
+    var s = JSON.parse(localStorage.getItem('youcan.reader')) || {};
+    for (var k in s) document.documentElement.setAttribute('data-reader-' + k, s[k]);
+} catch (e) {}
+</script>
+
+<div class="container container--narrow container--reader">
 <div class="story-layout">
   <div class="story-layout__body">
 
@@ -59,10 +78,35 @@ function renderComment(array $c, bool $isReply, string $slug, bool $isStoryOwner
                 <span class="story-reader__views">· <?= (int)$story['view_count'] ?> <?= htmlspecialchars(t('story.views'), ENT_QUOTES, 'UTF-8') ?></span>
             </div>
             <p class="story-reader__hint"><?= htmlspecialchars(t('comment.select_hint'), ENT_QUOTES, 'UTF-8') ?></p>
+
+            <details class="reader-settings" id="reader-settings">
+                <summary class="reader-settings__toggle">
+                    <span class="reader-settings__icon" aria-hidden="true">Aa</span>
+                    <?= htmlspecialchars(t('reader.settings'), ENT_QUOTES, 'UTF-8') ?>
+                </summary>
+                <div class="reader-settings__panel">
+                    <?php foreach ($readerSettings as $group => [$default, $options]): ?>
+                    <fieldset class="reader-settings__group">
+                        <legend class="reader-settings__legend"><?= htmlspecialchars(t('reader.' . $group), ENT_QUOTES, 'UTF-8') ?></legend>
+                        <div class="reader-settings__options">
+                            <?php foreach ($options as $value => $label): ?>
+                            <label class="reader-settings__option reader-settings__option--<?= $group ?>-<?= $value ?>">
+                                <input type="radio" name="<?= $group ?>" value="<?= $value ?>"<?= $value === $default ? ' checked' : '' ?>>
+                                <?= htmlspecialchars($label, ENT_QUOTES, 'UTF-8') ?>
+                            </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </fieldset>
+                    <?php endforeach; ?>
+                    <button type="button" class="btn btn--ghost btn--sm reader-settings__reset" id="reader-settings-reset">
+                        <?= htmlspecialchars(t('reader.reset'), ENT_QUOTES, 'UTF-8') ?>
+                    </button>
+                </div>
+            </details>
         </header>
 
         <div class="story-reader__wrap">
-            <div id="story-body" class="story-reader__body ql-editor"><?= $story['content'] ?></div>
+            <div id="story-body" class="story-reader__body ql-editor"<?= $storyLang ? ' lang="' . htmlspecialchars($storyLang, ENT_QUOTES, 'UTF-8') . '"' : '' ?>><?= $story['content'] ?></div>
             <div class="annotation-margin" id="annotation-margin" aria-hidden="true"></div>
         </div>
 

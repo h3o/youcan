@@ -27,6 +27,29 @@
     'story.delete_confirm'    => "mu' DaQaw'? reH QaD.",  // Destroy the tale? It is forever gone.
     'story.like_aria'         => "mu' vImaS",         // I prefer this tale
 
+    // Reading settings
+    'reader.settings'         => "laDmeH SeHlaw",     // control panel for reading
+    'reader.font'             => 'ngutlh',            // glyph / letter
+    'reader.font_sans'        => 'ngutlh nap',        // simple letters
+    'reader.font_serif'       => "ngutlh 'IH",        // beautiful letters
+    'reader.font_mono'        => "qonwI' jan",        // writer's device
+    'reader.size'             => 'tIn',               // bigness
+    'reader.spacing'          => 'logh',              // space
+    'reader.spacing_compact'  => 'Sum',               // near
+    'reader.spacing_normal'   => 'motlh',             // usual
+    'reader.spacing_relaxed'  => 'Hop',               // far
+    'reader.align'            => 'tlhegh',            // line
+    'reader.align_left'       => 'poS',               // left
+    'reader.align_justify'    => 'naQ',               // whole / complete
+    'reader.para'             => "mu'tlheghmey",      // sentences
+    'reader.para_spaced'      => 'logh ghaj',         // has space
+    'reader.para_indented'    => "yIHaw'",            // flee! (it steps back)
+    'reader.width'            => 'juch',              // breadth
+    'reader.width_narrow'     => 'mach',              // small
+    'reader.width_normal'     => 'motlh',             // usual
+    'reader.width_wide'       => 'tIn',               // big
+    'reader.reset'            => "yIchu'qa'",         // start it again!
+
     // Story editor form
     'story.write_heading'     => "mu' yIqon",
     'story.edit_heading'      => "mu' yIchoH",
